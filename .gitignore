@@ -1,0 +1,3 @@
+nodeapp/node_modules/*
+pg-db-data/*
+mongo-data/*
