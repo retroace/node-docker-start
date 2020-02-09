@@ -17,26 +17,35 @@ services:
       - db
     volumes: 
       - ./nodeapp:/usr/src/app
+      - /user/src/app/nodeapp/node_modules
     ports:
-      - "3000:3000"
+      - "3010:3000"
+      - "9229:9229"
     networks:
       - backend
       - frontend
+    command: >
+      sh -c "npm install && npm run start"
 
   mongo:
     container_name: mongo
     restart: always
-    image: mongo
+    image: mongo:3.4
     volumes:
-      - ./mongo-data:/data/db
+      - ./mongo-data:/data/db/
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
  
   db:
     image: postgres:9.4
     restart: always
     volumes:
       - ./pg-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: example
 
